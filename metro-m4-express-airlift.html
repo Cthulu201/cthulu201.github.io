@@ -1,0 +1,43 @@
+To use on Arch Linux:
+
+# Metro M4 Express AirLift
+
+# Mu Editor
+
+# Download snapshot, build, and install the following pkgs from AUR
+
+python-pigpio
+python-pgzero
+python-nudatus
+python-guizero
+
+python-colorzero  # Before python-gpiozero
+python-gpiozero
+
+mu-editor         # After the above packages
+
+# Add user to ttyACM0, usually uucp
+
+  # ls -al /dev/ttyACM0
+      228042 crw-rw---- 1 root uucp 166, 0  Wed  15-Jan-2020  /dev/ttyACM0
+  # gpasswd -a <username> <ttyACM0_group>
+  # systemctl reboot
+
+# Plug in Metro M4 Express AirLift
+# Mount AirLift drive to CIRCUITPY mount point
+
+  # dmesg | tail
+      [  +0.021562] usbcore: registered new interface driver snd-usb-audio
+      [  +0.917023] scsi host9: scsi scan: INQUIRY result too short (5), using 36
+      [  +0.000007] scsi 9:0:0:0: Direct-Access     Adafruit Metro M4 Airlift 1.0  PQ: 0 ANSI: 2
+      [  +0.001076] sd 9:0:0:0: [sdd] 4089 512-byte logical blocks: (2.09 MB/2.00 MiB)
+      [  +0.000302] sd 9:0:0:0: [sdd] Write Protect is off
+      [  +0.000004] sd 9:0:0:0: [sdd] Mode Sense: 03 00 00 00
+      [  +0.000301] sd 9:0:0:0: [sdd] No Caching mode page found
+      [  +0.000003] sd 9:0:0:0: [sdd] Assuming drive cache: write through
+      [  +0.058497]  sdd: sdd1
+      [  +0.002516] sd 9:0:0:0: [sdd] Attached SCSI removable disk
+  # mkdir /<mountpoint>/CIRCUITPY
+      mkdir /mnt/CIRCUITPY
+  # mount -o uid=1000,gid=1000 /dev/<drive> /<mountpoint>/CIRCUITPY
+      mount -o uid=1000,gid=1000 /dev/sdd1 /mnt/CIRCUITPY
